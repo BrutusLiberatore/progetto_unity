@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordine Confermato - Bolt & Bone</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #4E342E;
+            font-family: Arial, Helvetica, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        table {
+            border-collapse: collapse;
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+        .wrapper {
+            width: 100%;
+            table-layout: fixed;
+            background: #4E342E;
+            padding: 20px 0;
+        }
+        .inner {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #D7CCC8;
+            border-radius: 16px;
+        }
+        .header {
+            background: #3E2723;
+            padding: 25px 20px;
+            text-align: center;
+            border-radius: 16px 16px 0 0;
+        }
+        .header h1 {
+            color: #FFB300;
+            margin: 0;
+            font-size: 36px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        .success {
+            font-size: 50px;
+            margin: 0 0 10px 0;
+        }
+        .content {
+            padding: 30px 25px;
+        }
+        .content h2 {
+            color: #3E2723;
+            margin: 0 0 15px 0;
+            font-size: 22px;
+        }
+        .content p {
+            color: #5D4037;
+            font-size: 16px;
+            line-height: 1.5;
+            margin: 0 0 12px 0;
+        }
+        .order-box {
+            background: #BCAAA4;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        .order-row {
+            padding: 10px 0;
+            border-bottom: 1px solid #8D6E63;
+        }
+        .order-row:last-child {
+            border-bottom: none;
+        }
+        .order-label {
+            color: #5D4037;
+            font-size: 14px;
+        }
+        .order-value {
+            color: #3E2723;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .total-row {
+            padding-top: 15px;
+            margin-top: 10px;
+            border-top: 2px solid #5D4037;
+        }
+        .total-label {
+            color: #3E2723;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .total-value {
+            color: #3E2723;
+            font-size: 22px;
+            font-weight: bold;
+        }
+        .status-badge {
+            display: inline-block;
+            background: #4CAF50;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        .products-box {
+            background: #D7CCC8;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .products-box p {
+            margin: 8px 0;
+            color: #3E2723;
+            font-size: 14px;
+        }
+        .btn {
+            display: inline-block;
+            background: #FFB300;
+            color: #3E2723;
+            padding: 14px 28px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            margin: 15px 0;
+        }
+        .footer {
+            background: #4E342E;
+            padding: 20px;
+            text-align: center;
+            border-radius: 0 0 16px 16px;
+        }
+        .footer p {
+            color: #A1887F;
+            font-size: 12px;
+            margin: 0;
+        }
+        @media only screen and (max-width: 640px) {
+            .wrapper {
+                padding: 10px 10px;
+            }
+            .inner {
+                border-radius: 12px;
+            }
+            .header {
+                padding: 20px 15px;
+            }
+            .header h1 {
+                font-size: 28px;
+            }
+            .success {
+                font-size: 40px;
+            }
+            .content {
+                padding: 20px 15px;
+            }
+            .content h2 {
+                font-size: 20px;
+            }
+            .content p {
+                font-size: 15px;
+            }
+            .order-row td {
+                display: block;
+                text-align: center;
+            }
+            .total-row td {
+                display: block;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <center class="wrapper">
+        <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+                <td align="center">
+                    <table class="inner" width="100%" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td class="header">
+                                <h1>BOLT & BONE</h1>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="content">
+                                <div class="success">Ordine Confermato!</div>
+                                <h2>Ciao {username}!</h2>
+                                <p>Grazie per il tuo acquisto! Ecco i dettagli del tuo ordine:</p>
+                                
+                                <div class="order-box">
+                                    <table width="100%" cellpadding="0" cellspacing="0">
+                                        <tr>
+                                            <td class="order-label">Data ordine</td>
+                                            <td class="order-value" align="right">{order_date}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="order-label">Stato</td>
+                                            <td align="right"><span class="status-badge">CONFERMATO</span></td>
+                                        </tr>
+                                    </table>
+                                    
+                                    <div class="products-box">
+                                        <p><strong>Prodotti acquistati:</strong></p>
+                                        {products_list}
+                                    </div>
+                                    
+                                    <table width="100%" cellpadding="0" cellspacing="0">
+                                        <tr class="total-row">
+                                            <td class="total-label">TOTALE</td>
+                                            <td class="total-value" align="right">{total_eur} EUR</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                
+                                <p>I <strong>cristalli</strong> sono stati aggiunti al tuo account.</p>
+                                <p>Puoi verificarli nella tua <strong>Dashboard</strong>.</p>
+                                
+                                <center>
+                                    <a href="{dashboard_url}" class="btn">VAI ALLA DASHBOARD</a>
+                                </center>
+                                
+                                <p style="margin-top: 25px;">Grazie per aver acquistato da Bolt & Bone!</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="footer">
+                                <p>Bolt & Bone - Il tuo negozio gaming</p>
+                                <p style="margin-top: 8px; color: #8D6E63; font-size: 11px;">
+                                    Se non hai effettuato questo ordine, contatta il supporto.
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </center>
+</body>
+</html>

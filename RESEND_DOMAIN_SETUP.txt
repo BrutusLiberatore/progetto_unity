@@ -1,0 +1,51 @@
+===========================================
+VERIFICA DOMINIO RESEND - BOLT & BONE
+===========================================
+
+Istruzioni per verificare il dominio su Resend.com
+
+-------------------------------------------
+PASSAGGIO 1: Accedi a Resend
+-------------------------------------------
+Vai su: https://resend.com/domains
+Accedi con il tuo account Resend
+
+-------------------------------------------
+PASSAGGIO 2: Aggiungi il dominio
+-------------------------------------------
+Clicca "Add Domain"
+Inserisci il tuo dominio (es. boltbone.com)
+
+-------------------------------------------
+PASSAGGIO 3: Aggiungi i DNS records
+-------------------------------------------
+
+DN1 Records da aggiungere:
+
+1. DKIM Record (TXT):
+   Nome: resend._domainkey
+   Valore: p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC6ueI1Ahzh9MfzBEa0YOhLQA1BMSF6FoDxWiqjZsi5/ydyBqdOGRtcJUWrmhuy3tl5e1su1pAd2RapcODaaC2N6XUkbhVPP3PSX7bPSJ+Sx4Z5XqPz70s2VtqsEPMMPi5przDE+KUbw80cYq6VGiZV3pBYZwgwu2mz61jo9/3daQIDAQAB
+
+2. SPF Record (TXT) per invio:
+   Nome: send
+   Valore: v=spf1 include:amazonses.com ~all
+
+3. MX Record (opzionale, per ricezione):
+   Nome: send
+   Mail Server: feedback-smtp.eu-west-1.amazonses.com
+   Priority: 10
+
+-------------------------------------------
+PASSAGGIO 4: Verifica
+-------------------------------------------
+Torna su Resend e clicca "Verify DNS Records"
+Aspetta la verifica (5 min - 72 ore)
+
+-------------------------------------------
+PASSAGGIO 5: Update from address
+-------------------------------------------
+Dopo verifica, cambia il from nelle email:
+Da: Bolt & Bone <onboarding@resend.dev>
+A: Bolt & Bone <nome@iltuodominio.com>
+
+===========================================

@@ -1,0 +1,26 @@
+{
+  "name": "game-currency-shop",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Shop per valute e potenziamenti in-game",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@stripe/react-stripe-js": "^6.3.0",
+    "daisyui": "^4.12.0",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "react-router-dom": "^7.14.2",
+    "stripe": "^22.1.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.0.1",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.4",
+    "vite": "^8.0.10"
+  }
+}

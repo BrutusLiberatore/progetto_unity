@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14-alpine
+    container_name: boltbone-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: boltbonedb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-kratos}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d boltbonedb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - boltbone-net
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: boltbone-backend
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/boltbonedb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-kratos}
+      STRIPE_API_KEY: ${STRIPE_API_KEY}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
+      JWT_SECRET: ${JWT_SECRET}
+      BREVO_API_KEY: ${BREVO_API_KEY}
+      BREVO_FROM_EMAIL: ${BREVO_FROM_EMAIL:-boltbone26@gmail.com}
+      BREVO_FROM_NAME: ${BREVO_FROM_NAME:-Bolt & Bone}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:5173}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - boltbone-net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - VITE_API_URL=${FRONTEND_URL:-http://localhost:5173}
+    container_name: boltbone-frontend
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=${FRONTEND_URL:-http://localhost:5173}
+    depends_on:
+      - backend
+    networks:
+      - boltbone-net
+
+volumes:
+  postgres_data:
+    name: boltbone_postgres_data
+
+networks:
+  boltbone-net:
+    name: boltbone_network

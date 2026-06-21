@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background: linear-gradient(180deg, #6D4C41 0%, #4E342E 100%);
+    background-attachment: fixed;
+  }
+}
+
+@layer components {
+  .card-wood {
+    @apply bg-[#BCAAA4] rounded-lg border-2 border-[#5D4037];
+  }
+
+  .card-wood h2,
+  .card-wood p,
+  .card-wood span {
+    @apply text-black;
+  }
+
+  .btn-gold {
+    @apply bg-yellow-500 hover:bg-yellow-400 text-black font-bold border-none;
+  }
+
+  .text-gold {
+    @apply text-yellow-500;
+  }
+
+  .bar-bottom {
+    @apply bg-[#3B2F2F] border-t-2 border-[#3E2723];
+  }
+
+  .modal-wood {
+    @apply bg-[#D7CCC8] rounded-xl border-4 border-[#3E2723] text-black;
+  }
+
+  .modal-wood h2,
+  .modal-wood p,
+  .modal-wood span {
+    @apply text-black;
+  }
+
+  .input-wood {
+    @apply bg-[#4E342E] border-[#3E2723] text-white;
+  }
+}
+
+/* Responsive utilities */
+@media (max-width: 640px) {
+  .mobile-full {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 1rem !important;
+  }
+}
