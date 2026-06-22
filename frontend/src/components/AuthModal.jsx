@@ -47,7 +47,7 @@ export default function AuthModal({ mode, onClose, onSwitch, onLogin }) {
 
     try {
       const endpoint = mode === 'login' ? '/api/auth/login' : '/api/auth/register'
-      const body = mode === 'login' 
+      const body = mode === 'login'
         ? { email, password }
         : { email, password, username }
 
@@ -248,42 +248,42 @@ export default function AuthModal({ mode, onClose, onSwitch, onLogin }) {
 
   if (forgotPasswordMode) {
     return (
-      <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4" onClick={onClose}>
-        <div className="modal-wood w-full max-w-md p-6" onClick={e => e.stopPropagation()}>
+      <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4" onClick={onClose}>
+        <div className="pixel-modal w-full max-w-md p-6" onClick={e => e.stopPropagation()}>
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-black">Reset Password</h2>
-            <button onClick={onClose} className="btn btn-sm btn-circle bg-[#3E2723] text-white">X</button>
+            <h2 className="font-pixel text-game-gold text-lg" style={{textShadow: '2px 2px 0 #0a0c10'}}>RESET PASSWORD</h2>
+            <button onClick={onClose} className="pixel-btn-dark px-2 py-1 text-[10px]">X</button>
           </div>
 
           <div className="space-y-4">
-            <p className="text-black">
+            <p className="text-game-text-dim text-xs">
               Inserisci la tua email e ti invieremo un codice per resettare la password.
             </p>
 
             <div>
-              <label className="block text-black font-semibold mb-1">Email</label>
-              <input 
-                type="email" 
+              <label className="block font-pixel text-game-text-dim text-[10px] mb-1 uppercase">Email</label>
+              <input
+                type="email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
-                className="input input-bordered w-full bg-[#8D6E63] border-[#5D4037] text-black placeholder:text-black/50"
+                className="pixel-input w-full px-3 py-2 text-sm"
                 placeholder="email@esempio.com"
               />
             </div>
 
             {error && (
-              <div className="alert alert-error text-sm">
-                <span>{error}</span>
+              <div className="bg-game-red/10 border border-game-red p-2 text-game-red text-xs">
+                {error}
               </div>
             )}
 
-            <button onClick={handleForgotPassword} className="btn btn-gold w-full" disabled={loading}>
-              {loading ? <span className="loading loading-spinner"></span> : 'Invia Codice'}
+            <button onClick={handleForgotPassword} className="pixel-btn w-full py-3 text-xs" disabled={loading}>
+              {loading ? 'LOADING...' : 'INVIA CODICE'}
             </button>
 
             <div className="text-center">
-              <button onClick={() => setForgotPasswordMode(false)} className="text-yellow-600 hover:underline">
-                Torna al login
+              <button onClick={() => setForgotPasswordMode(false)} className="text-game-gold text-[10px] hover:text-game-gold-light">
+                TORNA AL LOGIN
               </button>
             </div>
           </div>
@@ -294,47 +294,47 @@ export default function AuthModal({ mode, onClose, onSwitch, onLogin }) {
 
   if (verifyMode) {
     return (
-      <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4" onClick={onClose}>
-        <div className="modal-wood w-full max-w-md p-6" onClick={e => e.stopPropagation()}>
+      <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4" onClick={onClose}>
+        <div className="pixel-modal w-full max-w-md p-6" onClick={e => e.stopPropagation()}>
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-black">Verifica Email</h2>
-            <button onClick={onClose} className="btn btn-sm btn-circle bg-[#3E2723] text-white">X</button>
+            <h2 className="font-pixel text-game-gold text-lg" style={{textShadow: '2px 2px 0 #0a0c10'}}>VERIFICA EMAIL</h2>
+            <button onClick={onClose} className="pixel-btn-dark px-2 py-1 text-[10px]">X</button>
           </div>
 
           <div className="space-y-4">
-            <p className="text-black">
-              Abbiamo inviato un codice di verifica a <strong>{pendingEmail}</strong>.
-              <br />Inserisci il codice qui sotto.
+            <p className="text-game-text-dim text-xs">
+              Abbiamo inviato un codice di verifica a <strong className="text-game-gold">{pendingEmail}</strong>.
+              Inserisci il codice qui sotto.
             </p>
 
             <div>
-              <label className="block text-black font-semibold mb-1">Codice di verifica</label>
-              <input 
-                type="text" 
+              <label className="block font-pixel text-game-text-dim text-[10px] mb-1 uppercase">Codice di verifica</label>
+              <input
+                type="text"
                 value={verificationCode}
                 onChange={e => setVerificationCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                className="input input-bordered w-full bg-[#8D6E63] border-[#5D4037] text-black text-center text-2xl tracking-widest font-mono"
+                className="pixel-input w-full px-3 py-3 text-center text-2xl tracking-[0.5em] font-pixel"
                 placeholder="000000"
                 maxLength={6}
               />
             </div>
 
             {error && (
-              <div className="alert alert-error text-sm">
-                <span>{error}</span>
+              <div className="bg-game-red/10 border border-game-red p-2 text-game-red text-xs">
+                {error}
               </div>
             )}
 
-            <button onClick={handleVerify} className="btn btn-gold w-full" disabled={loading}>
-              {loading ? <span className="loading loading-spinner"></span> : 'Verifica'}
+            <button onClick={handleVerify} className="pixel-btn w-full py-3 text-xs" disabled={loading}>
+              {loading ? 'LOADING...' : 'VERIFICA'}
             </button>
 
-            <div className="flex justify-between text-sm">
-              <button onClick={() => setVerifyMode(false)} className="text-yellow-600 hover:underline">
-                Torna indietro
+            <div className="flex justify-between text-[10px]">
+              <button onClick={() => setVerifyMode(false)} className="text-game-gold hover:text-game-gold-light">
+                TORNA INDIETRO
               </button>
-              <button onClick={handleResend} className="text-yellow-600 hover:underline">
-                Reinvia codice
+              <button onClick={handleResend} className="text-game-gold hover:text-game-gold-light">
+                REINVIA CODICE
               </button>
             </div>
           </div>
@@ -345,65 +345,65 @@ export default function AuthModal({ mode, onClose, onSwitch, onLogin }) {
 
   if (resetMode) {
     return (
-      <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4" onClick={onClose}>
-        <div className="modal-wood w-full max-w-md p-6" onClick={e => e.stopPropagation()}>
+      <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4" onClick={onClose}>
+        <div className="pixel-modal w-full max-w-md p-6" onClick={e => e.stopPropagation()}>
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-black">Nuova Password</h2>
-            <button onClick={onClose} className="btn btn-sm btn-circle bg-[#3E2723] text-white">X</button>
+            <h2 className="font-pixel text-game-gold text-lg" style={{textShadow: '2px 2px 0 #0a0c10'}}>NUOVA PASSWORD</h2>
+            <button onClick={onClose} className="pixel-btn-dark px-2 py-1 text-[10px]">X</button>
           </div>
 
           <div className="space-y-4">
-            <p className="text-black">
-              Inserisci il codice inviato a <strong>{pendingEmail}</strong> e la nuova password.
+            <p className="text-game-text-dim text-xs">
+              Inserisci il codice inviato a <strong className="text-game-gold">{pendingEmail}</strong> e la nuova password.
             </p>
 
             <div>
-              <label className="block text-black font-semibold mb-1">Codice</label>
-              <input 
-                type="text" 
+              <label className="block font-pixel text-game-text-dim text-[10px] mb-1 uppercase">Codice</label>
+              <input
+                type="text"
                 value={verificationCode}
                 onChange={e => setVerificationCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                className="input input-bordered w-full bg-[#8D6E63] border-[#5D4037] text-black text-center text-xl tracking-widest font-mono"
+                className="pixel-input w-full px-3 py-2 text-center text-xl tracking-[0.5em] font-pixel"
                 placeholder="000000"
                 maxLength={6}
               />
             </div>
 
             <div>
-              <label className="block text-black font-semibold mb-1">Nuova Password</label>
-              <input 
-                type="password" 
+              <label className="block font-pixel text-game-text-dim text-[10px] mb-1 uppercase">Nuova Password</label>
+              <input
+                type="password"
                 value={newPassword}
                 onChange={e => setNewPassword(e.target.value)}
-                className="input input-bordered w-full bg-[#8D6E63] border-[#5D4037] text-black"
+                className="pixel-input w-full px-3 py-2 text-sm"
                 placeholder="Nuova password"
               />
             </div>
 
             <div>
-              <label className="block text-black font-semibold mb-1">Conferma Password</label>
-              <input 
-                type="password" 
+              <label className="block font-pixel text-game-text-dim text-[10px] mb-1 uppercase">Conferma Password</label>
+              <input
+                type="password"
                 value={confirmNewPassword}
                 onChange={e => setConfirmNewPassword(e.target.value)}
-                className="input input-bordered w-full bg-[#8D6E63] border-[#5D4037] text-black"
+                className="pixel-input w-full px-3 py-2 text-sm"
                 placeholder="Conferma password"
               />
             </div>
 
             {error && (
-              <div className="alert alert-error text-sm">
-                <span>{error}</span>
+              <div className="bg-game-red/10 border border-game-red p-2 text-game-red text-xs">
+                {error}
               </div>
             )}
 
-            <button onClick={handleResetPassword} className="btn btn-gold w-full" disabled={loading}>
-              {loading ? <span className="loading loading-spinner"></span> : 'Resetta Password'}
+            <button onClick={handleResetPassword} className="pixel-btn w-full py-3 text-xs" disabled={loading}>
+              {loading ? 'LOADING...' : 'RESETTA PASSWORD'}
             </button>
 
             <div className="text-center">
-              <button onClick={() => setResetMode(false)} className="text-yellow-600 hover:underline">
-                Torna indietro
+              <button onClick={() => setResetMode(false)} className="text-game-gold text-[10px] hover:text-game-gold-light">
+                TORNA INDIETRO
               </button>
             </div>
           </div>
@@ -413,106 +413,106 @@ export default function AuthModal({ mode, onClose, onSwitch, onLogin }) {
   }
 
   return (
-    <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4" onClick={onClose}>
-      <div className="modal-wood w-full max-w-md p-6" onClick={e => e.stopPropagation()}>
+    <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4" onClick={onClose}>
+      <div className="pixel-modal w-full max-w-md p-6" onClick={e => e.stopPropagation()}>
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-black">
-            {mode === 'login' ? 'Accedi' : 'Registrati'}
+          <h2 className="font-pixel text-game-gold text-lg" style={{textShadow: '2px 2px 0 #0a0c10'}}>
+            {mode === 'login' ? 'ACCEDI' : 'REGISTRATI'}
           </h2>
-          <button onClick={onClose} className="btn btn-sm btn-circle bg-[#3E2723] text-white">X</button>
+          <button onClick={onClose} className="pixel-btn-dark px-2 py-1 text-[10px]">X</button>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {mode === 'register' && (
             <div>
-              <label className="block text-black font-semibold mb-1">Username</label>
-              <input 
-                type="text" 
+              <label className="block font-pixel text-game-text-dim text-[10px] mb-1 uppercase">Username</label>
+              <input
+                type="text"
                 value={username}
                 onChange={e => setUsername(e.target.value)}
-                className="input input-bordered w-full bg-[#8D6E63] border-[#5D4037] text-black placeholder:text-black/50"
+                className="pixel-input w-full px-3 py-2 text-sm"
                 placeholder="Il tuo username"
               />
             </div>
           )}
-          
+
           <div>
-            <label className="block text-black font-semibold mb-1">Email</label>
-            <input 
-              type="email" 
+            <label className="block font-pixel text-game-text-dim text-[10px] mb-1 uppercase">Email</label>
+            <input
+              type="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
-              className="input input-bordered w-full bg-[#8D6E63] border-[#5D4037] text-black placeholder:text-black/50"
+              className="pixel-input w-full px-3 py-2 text-sm"
               placeholder="email@esempio.com"
             />
           </div>
-          
+
           <div>
-            <label className="block text-black font-semibold mb-1">Password</label>
+            <label className="block font-pixel text-game-text-dim text-[10px] mb-1 uppercase">Password</label>
             <div className="relative">
-              <input 
-                type={showPassword ? "text" : "password"} 
+              <input
+                type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={e => setPassword(e.target.value)}
-                className="input input-bordered w-full bg-[#8D6E63] border-[#5D4037] text-black placeholder:text-black/50 pr-10"
+                className="pixel-input w-full px-3 py-2 text-sm pr-16"
                 placeholder="Password"
               />
-              <button 
+              <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-black/60 hover:text-black"
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-game-text-dim text-[10px] hover:text-game-gold"
               >
-                {showPassword ? 'Nascondi' : 'Mostra'}
+                {showPassword ? 'HIDE' : 'SHOW'}
               </button>
             </div>
           </div>
 
           {mode === 'register' && (
             <div>
-              <label className="block text-black font-semibold mb-1">Conferma Password</label>
+              <label className="block font-pixel text-game-text-dim text-[10px] mb-1 uppercase">Conferma Password</label>
               <div className="relative">
-                <input 
-                  type={showConfirmPassword ? "text" : "password"} 
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
                   value={confirmPassword}
                   onChange={e => setConfirmPassword(e.target.value)}
-                  className="input input-bordered w-full bg-[#8D6E63] border-[#5D4037] text-black placeholder:text-black/50 pr-10"
+                  className="pixel-input w-full px-3 py-2 text-sm pr-16"
                   placeholder="Conferma password"
                 />
-                <button 
+                <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-black/60 hover:text-black"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-game-text-dim text-[10px] hover:text-game-gold"
                 >
-                  {showConfirmPassword ? 'Nascondi' : 'Mostra'}
+                  {showConfirmPassword ? 'HIDE' : 'SHOW'}
                 </button>
               </div>
             </div>
           )}
 
           {error && (
-            <div className="alert alert-error text-sm">
-              <span>{error}</span>
+            <div className="bg-game-red/10 border border-game-red p-2 text-game-red text-xs">
+              {error}
             </div>
           )}
 
-          <button type="submit" className="btn btn-gold w-full" disabled={loading}>
-            {loading ? <span className="loading loading-spinner"></span> : (mode === 'login' ? 'Accedi' : 'Registrati')}
+          <button type="submit" className="pixel-btn w-full py-3 text-xs" disabled={loading}>
+            {loading ? 'LOADING...' : (mode === 'login' ? 'ACCEDI' : 'REGISTRATI')}
           </button>
         </form>
 
         {mode === 'login' && (
-          <div className="text-center mt-2">
-            <button onClick={() => setForgotPasswordMode(true)} className="text-sm text-yellow-600 hover:underline">
-              Password dimenticata?
+          <div className="text-center mt-3">
+            <button onClick={() => setForgotPasswordMode(true)} className="text-game-gold text-[10px] hover:text-game-gold-light">
+              PASSWORD DIMENTICATA?
             </button>
           </div>
         )}
 
-        <p className="text-center mt-4 text-[#3E2723]">
+        <p className="text-center mt-4 text-game-text-dim text-[10px]">
           {mode === 'login' ? (
-            <>Non hai un account? <button onClick={handleSwitch} className="text-yellow-600 font-bold hover:underline">Registrati</button></>
+            <>Non hai un account? <button onClick={handleSwitch} className="text-game-gold font-bold hover:text-game-gold-light">REGISTRATI</button></>
           ) : (
-            <>Hai gia un account? <button onClick={handleSwitch} className="text-yellow-600 font-bold hover:underline">Accedi</button></>
+            <>Hai gia un account? <button onClick={handleSwitch} className="text-game-gold font-bold hover:text-game-gold-light">ACCEDI</button></>
           )}
         </p>
       </div>

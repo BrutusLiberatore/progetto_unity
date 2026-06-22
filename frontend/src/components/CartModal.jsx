@@ -12,12 +12,12 @@ export default function CartModal({ cart, total, onClose, onUpdateQuantity, onRe
 
   if (success) {
     return (
-      <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4" onClick={onClose}>
-        <div className="modal-wood w-full max-w-lg p-10 text-center" onClick={e => e.stopPropagation()}>
-          <img src="/sprites/sword.png" alt="" className="w-16 h-16 mx-auto mb-6" style={{ imageRendering: 'pixelated' }} />
-          <h2 className="text-3xl font-bold text-black mb-4">Pagamento Riuscito!</h2>
-          <p className="text-black/70 text-lg mb-6">Grazie per il tuo acquisto. I cristalli verranno aggiunti al tuo account.</p>
-          <button onClick={onClose} className="btn btn-gold btn-lg">Chiudi</button>
+      <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4" onClick={onClose}>
+        <div className="pixel-modal w-full max-w-lg p-8 text-center" onClick={e => e.stopPropagation()}>
+          <img src="/sprites/sword.png" alt="" className="w-16 h-16 mx-auto mb-4" style={{imageRendering: 'pixelated'}} />
+          <h2 className="font-pixel text-game-gold text-xl mb-3" style={{textShadow: '2px 2px 0 #0a0c10'}}>PAGAMENTO RIUSCITO!</h2>
+          <p className="text-game-text-dim text-sm mb-6">Grazie per il tuo acquisto. I doboloni d'oro verranno aggiunti al tuo account.</p>
+          <button onClick={onClose} className="pixel-btn px-8 py-3 text-xs">CHIUDI</button>
         </div>
       </div>
     )
@@ -25,21 +25,13 @@ export default function CartModal({ cart, total, onClose, onUpdateQuantity, onRe
 
   if (needsLogin) {
     return (
-      <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4" onClick={onClose}>
-        <div className="modal-wood w-full max-w-md p-8 text-center" onClick={e => e.stopPropagation()}>
-          <h2 className="text-2xl font-bold text-black mb-4">Accesso Richiesto</h2>
-          <p className="text-black/70 mb-6">Devi effettuare il login per completare l'acquisto.</p>
+      <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4" onClick={onClose}>
+        <div className="pixel-modal w-full max-w-md p-8 text-center" onClick={e => e.stopPropagation()}>
+          <h2 className="font-pixel text-game-gold text-lg mb-3" style={{textShadow: '2px 2px 0 #0a0c10'}}>ACCESSO RICHIESTO</h2>
+          <p className="text-game-text-dim text-sm mb-6">Devi effettuare il login per completare l'acquisto.</p>
           <div className="flex gap-4 justify-center">
-            <button 
-              onClick={() => {
-                onLogin()
-                onClose()
-              }} 
-              className="btn btn-gold"
-            >
-              Accedi
-            </button>
-            <button onClick={onClose} className="btn btn-outline border-black text-black">Annulla</button>
+            <button onClick={() => { onLogin(); onClose(); }} className="pixel-btn px-6 py-2 text-xs">ACCEDI</button>
+            <button onClick={onClose} className="pixel-btn-dark px-6 py-2 text-xs">ANNULLA</button>
           </div>
         </div>
       </div>
@@ -48,34 +40,28 @@ export default function CartModal({ cart, total, onClose, onUpdateQuantity, onRe
 
   if (cart.length === 0 && !checkout) {
     return (
-      <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4" onClick={onClose}>
-        <div className="modal-wood w-full max-w-md p-8 text-center" onClick={e => e.stopPropagation()}>
-          <h2 className="text-2xl font-bold text-black mb-4">Carrello Vuoto</h2>
-          <p className="text-black/70 mb-6">Aggiungi dei prodotti!</p>
-          <button onClick={onClose} className="btn btn-gold">Chiudi</button>
+      <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4" onClick={onClose}>
+        <div className="pixel-modal w-full max-w-md p-8 text-center" onClick={e => e.stopPropagation()}>
+          <h2 className="font-pixel text-game-gold text-lg mb-3" style={{textShadow: '2px 2px 0 #0a0c10'}}>CARRELLO VUOTO</h2>
+          <p className="text-game-text-dim text-sm mb-6">Aggiungi dei prodotti!</p>
+          <button onClick={onClose} className="pixel-btn px-8 py-3 text-xs">CHIUDI</button>
         </div>
       </div>
     )
   }
 
   const handleCheckout = async () => {
-    // Check if user is logged in first
     if (!user) {
       setNeedsLogin(true)
       return
     }
 
-    console.log('Starting checkout for user:', user.id, user)
-
     setLoading(true)
     try {
-      // 1. Crea l'ordine nel database (include userId)
       const items = cart.map(item => ({
         id: item.id,
         quantity: item.quantity
       }))
-
-      console.log('Creating order with items:', items, 'and userId:', user.id)
 
       const orderRes = await fetch(`${API_URL}/api/payments/create-order`, {
         method: 'POST',
@@ -89,10 +75,8 @@ export default function CartModal({ cart, total, onClose, onUpdateQuantity, onRe
       }
 
       const orderData = await orderRes.json()
-      console.log('Order created:', orderData)
       const orderId = orderData.orderId
 
-      // 2. Crea il PaymentIntent di Stripe
       const intentRes = await fetch(`${API_URL}/api/payments/intent`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -105,7 +89,6 @@ export default function CartModal({ cart, total, onClose, onUpdateQuantity, onRe
       }
 
       const intentData = await intentRes.json()
-      console.log('PaymentIntent created:', intentData)
       setClientSecret(intentData.clientSecret)
       setCheckout(true)
     } catch (err) {
@@ -131,59 +114,52 @@ export default function CartModal({ cart, total, onClose, onUpdateQuantity, onRe
 
   return (
     <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4" onClick={onClose}>
-      <div 
-        className="modal-wood w-full max-w-3xl h-[90vh] flex flex-col"
-        onClick={e => e.stopPropagation()}
-      >
-        <div className="flex justify-between items-center p-6 border-b-4 border-[#5D4037]">
-          <h2 className="text-3xl font-bold text-black">
-            {checkout ? 'Pagamento' : 'Il tuo Carrello'}
+      <div className="pixel-modal w-full max-w-3xl h-[90vh] flex flex-col" onClick={e => e.stopPropagation()}>
+        <div className="flex justify-between items-center p-4 border-b-2 border-game-border">
+          <h2 className="font-pixel text-game-gold text-lg" style={{textShadow: '2px 2px 0 #0a0c10'}}>
+            {checkout ? 'PAGAMENTO' : 'IL TUO CARRELLO'}
           </h2>
-          <button onClick={onClose} className="btn btn-lg btn-circle bg-[#3E2723] text-white">X</button>
+          <button onClick={onClose} className="pixel-btn-dark px-2 py-1 text-[10px]">X</button>
         </div>
 
         {!checkout ? (
           <>
             <div className="flex-1 overflow-y-auto p-4">
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {cart.map(item => (
-                  <div key={item.id} className="card-wood p-4 flex items-center gap-4">
-                    <img src={item.imageUrl} alt={item.name} className="w-20 h-20 object-cover rounded-lg" />
-                    <div className="flex-1">
-                      <h3 className="font-bold text-black text-lg">{item.name}</h3>
-                      <p className="text-black/70">{item.description}</p>
+                  <div key={item.id} className="pixel-card p-4 flex items-center gap-4">
+                    <img src={item.imageUrl} alt={item.name} className="w-16 h-16 object-contain border border-game-border p-1 bg-game-surface" style={{imageRendering: 'pixelated'}} />
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-pixel text-game-text text-sm truncate">{item.name}</h3>
+                      <p className="text-game-text-dim text-[10px] truncate">{item.description}</p>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <button onClick={() => onUpdateQuantity(item.id, item.quantity - 1)} className="btn btn-md bg-[#3E2723] text-white">-</button>
-                      <span className="font-bold text-black text-xl w-12 text-center">{item.quantity}</span>
-                      <button onClick={() => onUpdateQuantity(item.id, item.quantity + 1)} className="btn btn-md bg-[#3E2723] text-white">+</button>
+                    <div className="flex items-center gap-2">
+                      <button onClick={() => onUpdateQuantity(item.id, item.quantity - 1)} className="pixel-btn-dark w-8 h-8 flex items-center justify-center text-xs">-</button>
+                      <span className="font-pixel text-game-text text-sm w-8 text-center">{item.quantity}</span>
+                      <button onClick={() => onUpdateQuantity(item.id, item.quantity + 1)} className="pixel-btn-dark w-8 h-8 flex items-center justify-center text-xs">+</button>
                     </div>
-                    <div className="text-right min-w-[140px]">
-                      <p className="text-black font-bold text-2xl">{((item.priceCents * item.quantity) / 100).toFixed(2)} EUR</p>
-                      <button onClick={() => onRemove(item.id)} className="text-red-600 text-sm hover:underline">Rimuovi</button>
+                    <div className="text-right min-w-[100px]">
+                      <p className="pixel-price text-sm">{((item.priceCents * item.quantity) / 100).toFixed(2)} EUR</p>
+                      <button onClick={() => onRemove(item.id)} className="text-game-red text-[10px] hover:text-game-red/80 mt-1">RIMUOVI</button>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="border-t-4 border-[#5D4037] p-6 bg-[#BCAAA4]">
+            <div className="border-t-2 border-game-border p-4 bg-game-surface">
               <div className="flex justify-between items-center mb-4">
-                <span className="text-black text-lg">Numero prodotti: {cart.reduce((sum, item) => sum + item.quantity, 0)}</span>
-                <span className="text-3xl font-bold text-black">Totale: <span className="text-black text-4xl">{(total / 100).toFixed(2)} EUR</span></span>
+                <span className="text-game-text-dim text-xs font-pixel">PRODOTTI: {cart.reduce((sum, item) => sum + item.quantity, 0)}</span>
+                <span className="pixel-price text-lg">TOTALE: {(total / 100).toFixed(2)} EUR</span>
               </div>
-              <button 
-                onClick={handleCheckout} 
-                disabled={loading}
-                className="btn btn-gold w-full text-xl py-4"
-              >
-                {loading ? 'Elaborazione...' : "Procedi all'acquisto"}
+              <button onClick={handleCheckout} disabled={loading} className="pixel-btn w-full py-3 text-sm">
+                {loading ? 'LOADING...' : "PROCEDI ALL'ACQUISTO"}
               </button>
             </div>
           </>
         ) : (
           <div className="flex-1 overflow-y-auto p-4">
-            <CheckoutForm 
+            <CheckoutForm
               clientSecret={clientSecret}
               total={total}
               onSuccess={handlePaymentSuccess}

@@ -39,18 +39,16 @@ const endpoints = [
     items: [
       { method: 'GET', path: '/api/leaderboard/monthly', desc: 'Classifica mensile top 100', auth: false },
       { method: 'GET', path: '/api/leaderboard/global', desc: 'Classifica mondiale top 100', auth: false },
-      { method: 'GET', path: '/api/leaderboard/national', desc: 'Classifica nazionale top 100', auth: false },
       { method: 'POST', path: '/api/leaderboard/update', desc: 'Aggiorna punteggio utente', auth: true, body: { userId: 1, score: 100 } },
-      { method: 'POST', path: '/api/leaderboard/init', desc: 'Inizializza dati test classifica', auth: true }
     ]
   }
 ]
 
 const methodColors = {
-  GET: 'bg-green-600',
-  POST: 'bg-blue-600',
-  PUT: 'bg-yellow-600',
-  DELETE: 'bg-red-600'
+  GET: 'bg-game-green border-game-green',
+  POST: 'bg-game-blue border-game-blue',
+  PUT: 'bg-game-gold border-game-gold',
+  DELETE: 'bg-game-red border-game-red'
 }
 
 export default function ApiDocs() {
@@ -88,19 +86,9 @@ export default function ApiDocs() {
         data = await res.text()
       }
 
-      setResponse({
-        status,
-        headers: responseHeaders,
-        data,
-        ok: res.ok
-      })
+      setResponse({ status, headers: responseHeaders, data, ok: res.ok })
     } catch (err) {
-      setResponse({
-        status: 0,
-        headers: {},
-        data: { error: err.message },
-        ok: false
-      })
+      setResponse({ status: 0, headers: {}, data: { error: err.message }, ok: false })
     } finally {
       setLoading(false)
     }
@@ -110,43 +98,42 @@ export default function ApiDocs() {
     setMethod(endpoint.method)
     setUrl(`http://localhost:3001${endpoint.path}`)
     setSelectedEndpoint(endpoint)
-    if (endpoint.body) {
-      setBody(JSON.stringify(endpoint.body, null, 2))
-    } else {
-      setBody('')
-    }
+    setBody(endpoint.body ? JSON.stringify(endpoint.body, null, 2) : '')
   }
 
   return (
     <div className="max-w-7xl mx-auto">
-      <h1 className="text-4xl font-bold text-yellow-500 mb-8">API Documentation</h1>
+      <div className="text-center py-8 mb-8">
+        <h1 className="font-pixel text-game-gold text-3xl mb-2" style={{textShadow: '2px 2px 0 #0a0c10'}}>API DOCUMENTATION</h1>
+        <div className="pixel-divider max-w-xs mx-auto"></div>
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div>
-          <h2 className="text-2xl font-bold text-white mb-4">Endpoint Disponibili</h2>
-          <div className="space-y-6">
+          <h2 className="font-pixel text-game-text text-sm mb-4 uppercase">Endpoint Disponibili</h2>
+          <div className="space-y-4">
             {endpoints.map(section => (
               <div key={section.category}>
-                <h3 className="text-xl font-semibold text-[#D7CCC8] mb-2">{section.category}</h3>
+                <h3 className="font-pixel text-game-gold text-xs mb-2 uppercase">{section.category}</h3>
                 <div className="space-y-2">
                   {section.items.map((ep, idx) => (
                     <button
                       key={idx}
                       onClick={() => selectEndpoint(ep)}
-                      className={`w-full text-left p-3 rounded-lg border transition-colors ${
+                      className={`w-full text-left p-3 border transition-colors ${
                         selectedEndpoint === ep
-                          ? 'bg-[#5D4037] border-yellow-500'
-                          : 'bg-[#3E2723] border-[#4E342E] hover:bg-[#4E342E]'
+                          ? 'bg-game-card border-game-gold'
+                          : 'bg-game-surface border-game-border hover:border-game-gold/50'
                       }`}
                     >
                       <div className="flex items-center gap-3">
-                        <span className={`px-2 py-1 rounded text-xs font-bold text-white ${methodColors[ep.method]}`}>
+                        <span className={`pixel-badge text-[8px] ${methodColors[ep.method]}`}>
                           {ep.method}
                         </span>
-                        <code className="text-[#D7CCC8] text-sm">{ep.path}</code>
-                        {ep.auth && <span className="text-xs text-yellow-500">[Auth]</span>}
+                        <code className="font-pixel text-game-text text-[10px]">{ep.path}</code>
+                        {ep.auth && <span className="pixel-badge bg-game-gold/10 text-game-gold border-game-gold/30 text-[8px]">AUTH</span>}
                       </div>
-                      <p className="text-[#BCAAA4] text-sm mt-1">{ep.desc}</p>
+                      <p className="text-game-text-dim text-[10px] mt-1">{ep.desc}</p>
                     </button>
                   ))}
                 </div>
@@ -156,13 +143,13 @@ export default function ApiDocs() {
         </div>
 
         <div>
-          <h2 className="text-2xl font-bold text-white mb-4">API Tester</h2>
-          <div className="bg-[#3E2723] rounded-lg p-4 space-y-4">
+          <h2 className="font-pixel text-game-text text-sm mb-4 uppercase">API Tester</h2>
+          <div className="pixel-card p-4 space-y-4">
             <div className="flex gap-2">
               <select
                 value={method}
                 onChange={e => setMethod(e.target.value)}
-                className="bg-[#4E342E] text-white px-3 py-2 rounded-lg border border-[#5D4037]"
+                className="pixel-input px-3 py-2 text-xs"
               >
                 <option>GET</option>
                 <option>POST</option>
@@ -173,50 +160,45 @@ export default function ApiDocs() {
                 type="text"
                 value={url}
                 onChange={e => setUrl(e.target.value)}
-                className="flex-1 bg-[#4E342E] text-white px-3 py-2 rounded-lg border border-[#5D4037]"
+                className="flex-1 pixel-input px-3 py-2 text-xs"
                 placeholder="URL"
               />
             </div>
 
             <div>
-              <label className="text-[#D7CCC8] text-sm mb-1 block">Headers (JSON)</label>
+              <label className="font-pixel text-game-text-dim text-[10px] mb-1 block uppercase">Headers (JSON)</label>
               <textarea
                 value={headers}
                 onChange={e => setHeaders(e.target.value)}
-                className="w-full bg-[#4E342E] text-white px-3 py-2 rounded-lg border border-[#5D4037] font-mono text-sm"
-                rows={4}
+                className="w-full pixel-input px-3 py-2 font-mono text-[10px] resize-none"
+                rows={3}
               />
             </div>
 
             {['POST', 'PUT'].includes(method) && (
               <div>
-                <label className="text-[#D7CCC8] text-sm mb-1 block">Body (JSON)</label>
+                <label className="font-pixel text-game-text-dim text-[10px] mb-1 block uppercase">Body (JSON)</label>
                 <textarea
                   value={body}
                   onChange={e => setBody(e.target.value)}
-                  className="w-full bg-[#4E342E] text-white px-3 py-2 rounded-lg border border-[#5D4037] font-mono text-sm"
-                  rows={8}
+                  className="w-full pixel-input px-3 py-2 font-mono text-[10px] resize-none"
+                  rows={6}
                   placeholder='{"key": "value"}'
                 />
               </div>
             )}
 
-            <button
-              onClick={sendRequest}
-              disabled={loading}
-              className="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-lg disabled:opacity-50"
-            >
-              {loading ? 'Invio...' : 'SEND'}
+            <button onClick={sendRequest} disabled={loading} className="pixel-btn w-full py-3 text-xs">
+              {loading ? 'LOADING...' : 'SEND'}
             </button>
 
             {response && (
               <div className="mt-4">
-                <div className={`flex items-center gap-2 mb-2 ${response.ok ? 'text-green-400' : 'text-red-400'}`}>
-                  <span className="font-bold">Status: {response.status}</span>
-                  <span>{response.ok ? 'OK' : 'ERROR'}</span>
+                <div className={`font-pixel text-xs mb-2 ${response.ok ? 'text-game-green' : 'text-game-red'}`}>
+                  STATUS: {response.status} {response.ok ? 'OK' : 'ERROR'}
                 </div>
-                <div className="bg-[#2C1810] rounded-lg p-3">
-                  <pre className="text-[#D7CCC8] text-sm overflow-x-auto whitespace-pre-wrap">
+                <div className="bg-game-bg p-3 border border-game-border max-h-60 overflow-auto">
+                  <pre className="font-mono text-game-text text-[10px] whitespace-pre-wrap break-all">
                     {JSON.stringify(response.data, null, 2)}
                   </pre>
                 </div>

@@ -30,14 +30,15 @@ export default function Home({ addToCart }) {
 
   if (loading) return (
     <div className="flex justify-center items-center min-h-[50vh]">
-      <span className="loading loading-spinner loading-lg text-yellow-500"></span>
+      <div className="font-pixel text-game-gold animate-pulse">LOADING...</div>
     </div>
   )
-  
+
   if (error) return (
     <div className="flex justify-center items-center min-h-[50vh]">
-      <div className="alert alert-error max-w-md">
-        <span>{error}</span>
+      <div className="pixel-card p-6 border-game-red border-2 max-w-md text-center">
+        <p className="font-pixel text-game-red text-sm mb-2">ERROR</p>
+        <p className="text-game-text-dim text-[10px]">{error}</p>
       </div>
     </div>
   )
@@ -47,15 +48,33 @@ export default function Home({ addToCart }) {
 
   return (
     <div className="px-4 md:px-8 max-w-6xl mx-auto">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl md:text-6xl font-bold text-yellow-500 mb-4" style={{fontFamily: "'Firlest', cursive", letterSpacing: '2px'}}>BOLT & BONE</h1>
-        <p className="text-xl text-white/80">Acquista cristalli e potenziamenti per il tuo gioco</p>
+      {/* HERO */}
+      <div className="text-center py-16 mb-12 relative">
+        <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
+          <img src="/sprites/sword.png" alt="" className="w-64 h-64" style={{imageRendering: 'pixelated'}} />
+        </div>
+        <div className="relative z-10">
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <img src="/sprites/sword.png" alt="" className="w-12 h-12 hidden sm:block" style={{imageRendering: 'pixelated'}} />
+            <h1 className="game-title text-game-gold text-5xl md:text-7xl font-pixel">
+              BOLT & BONE
+            </h1>
+            <img src="/sprites/axe.png" alt="" className="w-12 h-12 hidden sm:block" style={{imageRendering: 'pixelated'}} />
+          </div>
+          <p className="font-pixel text-game-text-dim text-xs uppercase tracking-widest mb-2">Negozio ufficiale</p>
+          <div className="pixel-divider max-w-xs mx-auto"></div>
+          <p className="text-game-text-dim text-sm mt-4">Acquista doboloni d'oro e potenziamenti per il tuo gioco</p>
+        </div>
       </div>
 
-      <section className="mb-12">
-        <h2 className="text-2xl md:text-3xl font-bold text-white mb-6 border-b border-yellow-600 pb-2">Cristalli</h2>
+      {/* CRISTALLI */}
+      <section className="mb-16">
+        <h2 className="pixel-section-title text-lg mb-8 flex items-center gap-3">
+          <img src="/sprites/scepter.png" alt="" className="w-6 h-6" style={{imageRendering: 'pixelated'}} />
+          DOBOLONI D'ORO
+        </h2>
         {currencyProducts.length === 0 ? (
-          <p className="text-white/60">Nessun prodotto disponibile</p>
+          <p className="text-game-text-dim font-pixel text-xs text-center py-8">NESSUN PRODOTTO DISPONIBILE</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 justify-items-center">
             {currencyProducts.map(product => (
@@ -65,10 +84,14 @@ export default function Home({ addToCart }) {
         )}
       </section>
 
-      <section className="mb-12">
-        <h2 className="text-2xl md:text-3xl font-bold text-white mb-6 border-b border-yellow-600 pb-2">Potenziamenti</h2>
+      {/* POTENZIAMENTI */}
+      <section className="mb-16">
+        <h2 className="pixel-section-title text-lg mb-8 flex items-center gap-3">
+          <img src="/sprites/hammer.png" alt="" className="w-6 h-6" style={{imageRendering: 'pixelated'}} />
+          POTENZIAMENTI
+        </h2>
         {boostProducts.length === 0 ? (
-          <p className="text-white/60">Nessun prodotto disponibile</p>
+          <p className="text-game-text-dim font-pixel text-xs text-center py-8">NESSUN PRODOTTO DISPONIBILE</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 justify-items-center">
             {boostProducts.map(product => (

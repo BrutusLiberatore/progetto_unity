@@ -4,14 +4,16 @@ import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 const CARD_ELEMENT_OPTIONS = {
   style: {
     base: {
-      fontSize: '16px',
-      color: '#000000',
+      fontSize: '14px',
+      fontFamily: 'BoldPixels, monospace',
+      color: '#d0d0d0',
+      backgroundColor: '#0e1016',
       '::placeholder': {
-        color: '#5D4037',
+        color: '#4a4d55',
       },
     },
     invalid: {
-      color: '#d32f2f',
+      color: '#c0392b',
     },
   },
 }
@@ -50,30 +52,22 @@ export default function CheckoutForm({ clientSecret, total, onSuccess, onBack })
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="bg-white p-4 rounded-lg border-2 border-[#5D4037]">
+      <div className="bg-game-surface p-4 border-2 border-game-border">
         <CardElement options={CARD_ELEMENT_OPTIONS} />
       </div>
 
       {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+        <div className="bg-game-red/10 border border-game-red p-3 text-game-red text-xs">
           {error}
         </div>
       )}
 
       <div className="flex gap-4">
-        <button
-          type="button"
-          onClick={onBack}
-          className="btn btn-md bg-[#5D4037] text-white flex-1"
-        >
-          Indietro
+        <button type="button" onClick={onBack} className="pixel-btn-dark flex-1 py-3 text-xs">
+          INDIETRO
         </button>
-        <button
-          type="submit"
-          disabled={!stripe || loading}
-          className="btn btn-gold flex-1 text-xl"
-        >
-          {loading ? 'Elaborazione...' : `Paga ${(total / 100).toFixed(2)} EUR`}
+        <button type="submit" disabled={!stripe || loading} className="pixel-btn flex-1 py-3 text-xs">
+          {loading ? 'LOADING...' : `PAGA ${(total / 100).toFixed(2)} EUR`}
         </button>
       </div>
     </form>

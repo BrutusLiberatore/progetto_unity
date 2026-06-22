@@ -2,49 +2,230 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'BoldPixels';
+  src: url('./assets/fonts/BoldPixels.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer base {
+  * {
+    image-rendering: auto;
+  }
+  img[src*="sprites"] {
+    image-rendering: pixelated;
+  }
   body {
-    background: linear-gradient(180deg, #6D4C41 0%, #4E342E 100%);
+    font-family: 'BoldPixels', monospace;
+    background: #0a0c10;
     background-attachment: fixed;
+    color: #d0d0d0;
+    letter-spacing: 0.5px;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #12141a;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #e8a525;
+    border: 2px solid #12141a;
   }
 }
 
 @layer components {
-  .card-wood {
-    @apply bg-[#BCAAA4] rounded-lg border-2 border-[#5D4037];
+  /* === PIXEL CARD === */
+  .pixel-card {
+    background: #16181e;
+    border: 2px solid #2a2d35;
+    box-shadow: 4px 4px 0 #0a0c10;
+    transition: all 0.1s ease;
+  }
+  .pixel-card:hover {
+    border-color: #e8a525;
+    box-shadow: 4px 4px 0 #0a0c10, 0 0 12px rgba(232, 165, 37, 0.15);
   }
 
-  .card-wood h2,
-  .card-wood p,
-  .card-wood span {
-    @apply text-black;
+  /* === PIXEL MODAL === */
+  .pixel-modal {
+    background: #16181e;
+    border: 2px solid #e8a525;
+    box-shadow: 6px 6px 0 #0a0c10;
   }
 
-  .btn-gold {
-    @apply bg-yellow-500 hover:bg-yellow-400 text-black font-bold border-none;
+  /* === PIXEL BUTTON === */
+  .pixel-btn {
+    background: #e8a525;
+    color: #0a0c10;
+    border: 2px solid #c8901a;
+    box-shadow: 3px 3px 0 #0a0c10;
+    transition: all 0.05s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .pixel-btn:hover {
+    background: #f0b830;
+    border-color: #e8a525;
+  }
+  .pixel-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 #0a0c10;
   }
 
-  .text-gold {
-    @apply text-yellow-500;
+  .pixel-btn-dark {
+    background: #2a2d35;
+    color: #d0d0d0;
+    border: 2px solid #3a3d45;
+    box-shadow: 3px 3px 0 #0a0c10;
+    transition: all 0.05s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .pixel-btn-dark:hover {
+    background: #3a3d45;
+    border-color: #e8a525;
+    color: #e8a525;
+  }
+  .pixel-btn-dark:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 #0a0c10;
   }
 
-  .bar-bottom {
-    @apply bg-[#3B2F2F] border-t-2 border-[#3E2723];
+  .pixel-btn-red {
+    background: #8b1a1a;
+    color: #d0d0d0;
+    border: 2px solid #a52a2a;
+    box-shadow: 3px 3px 0 #0a0c10;
+    transition: all 0.05s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .pixel-btn-red:hover {
+    background: #a52a2a;
+    border-color: #c0392b;
   }
 
-  .modal-wood {
-    @apply bg-[#D7CCC8] rounded-xl border-4 border-[#3E2723] text-black;
+  /* === PIXEL INPUT === */
+  .pixel-input {
+    background: #0e1016;
+    border: 2px solid #2a2d35;
+    color: #d0d0d0;
+    font-family: 'BoldPixels', monospace;
+    box-shadow: inset 2px 2px 0 #0a0c10;
+  }
+  .pixel-input:focus {
+    border-color: #e8a525;
+    outline: none;
+    box-shadow: inset 2px 2px 0 #0a0c10, 0 0 8px rgba(232, 165, 37, 0.2);
+  }
+  .pixel-input::placeholder {
+    color: #4a4d55;
   }
 
-  .modal-wood h2,
-  .modal-wood p,
-  .modal-wood span {
-    @apply text-black;
+  /* === PIXEL BADGE === */
+  .pixel-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 1px solid;
+    image-rendering: pixelated;
   }
 
-  .input-wood {
-    @apply bg-[#4E342E] border-[#3E2723] text-white;
+  /* === PIXEL DIVIDER === */
+  .pixel-divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #e8a525, transparent);
+    border: none;
   }
+
+  /* === PIXEL SECTION HEADER === */
+  .pixel-section-title {
+    font-family: 'BoldPixels', monospace;
+    color: #e8a525;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 0 #0a0c10;
+    border-bottom: 2px solid #2a2d35;
+    padding-bottom: 8px;
+  }
+
+  /* === GOLD GLOW TEXT === */
+  .text-gold-glow {
+    color: #e8a525;
+    text-shadow: 0 0 10px rgba(232, 165, 37, 0.3);
+  }
+
+  /* === PIXEL PRICE === */
+  .pixel-price {
+    font-family: 'BoldPixels', monospace;
+    color: #e8a525;
+    font-size: 1.25rem;
+    letter-spacing: 1px;
+  }
+
+  /* === GAME TITLE (recreates game's CreateOutline + shadow) === */
+  .game-title {
+    color: #e8a525;
+    text-shadow:
+      /* Outline copies (like game's CreateOutline at 3px) */
+      -2px -2px 0 #7a5010,
+       2px -2px 0 #7a5010,
+      -2px  2px 0 #7a5010,
+       2px  2px 0 #7a5010,
+      /* Drop shadow (like GameFont.AddShadow) */
+      3px 3px 0 #0a0c10,
+      /* Outer glow */
+      0 0 20px rgba(232, 165, 37, 0.3),
+      0 0 40px rgba(232, 165, 37, 0.1);
+    animation: titlePulse 3s ease-in-out infinite;
+  }
+
+  @keyframes titlePulse {
+    0%, 100% {
+      text-shadow:
+        -2px -2px 0 #7a5010,
+         2px -2px 0 #7a5010,
+        -2px  2px 0 #7a5010,
+         2px  2px 0 #7a5010,
+        3px 3px 0 #0a0c10,
+        0 0 20px rgba(232, 165, 37, 0.3),
+        0 0 40px rgba(232, 165, 37, 0.1);
+    }
+    50% {
+      text-shadow:
+        -2px -2px 0 #7a5010,
+         2px -2px 0 #7a5010,
+        -2px  2px 0 #7a5010,
+         2px  2px 0 #7a5010,
+        3px 3px 0 #0a0c10,
+        0 0 30px rgba(232, 165, 37, 0.5),
+        0 0 60px rgba(232, 165, 37, 0.2);
+    }
+  }
+}
+
+/* === SCANLINE OVERLAY (subtle) === */
+.scanline-overlay::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
 }
 
 /* Responsive utilities */

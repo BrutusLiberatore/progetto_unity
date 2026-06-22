@@ -35,7 +35,6 @@ export default function AdminLogin({ onLogin }) {
         return
       }
 
-      // Salva il token JWT admin
       localStorage.setItem('admin_token', data.token)
       onLogin(data.token)
       navigate('/admin')
@@ -47,47 +46,50 @@ export default function AdminLogin({ onLogin }) {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-[#6D4C41] to-[#4E342E] p-4">
-      <div className="card-wood w-full max-w-md p-8">
-        <h1 className="text-3xl font-bold text-[#3E2723] text-center mb-2">Admin Login</h1>
-        <p className="text-[#3E2723]/70 text-center mb-6">Accesso riservato agli amministratori</p>
+    <div className="min-h-[70vh] flex items-center justify-center p-4">
+      <div className="pixel-modal w-full max-w-md p-8">
+        <div className="text-center mb-6">
+          <h1 className="font-pixel text-game-gold text-2xl mb-2" style={{textShadow: '2px 2px 0 #0a0c10'}}>ADMIN LOGIN</h1>
+          <div className="pixel-divider max-w-[120px] mx-auto mb-2"></div>
+          <p className="text-game-text-dim text-[10px] uppercase tracking-wider">Accesso riservato agli amministratori</p>
+        </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-[#3E2723] font-semibold mb-1">Email Admin</label>
-            <input 
-              type="email" 
+            <label className="block font-pixel text-game-text-dim text-[10px] mb-1 uppercase">Email Admin</label>
+            <input
+              type="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
-              className="input input-bordered w-full bg-[#4E342E] border-[#3E2723] text-[#3E2723]"
+              className="pixel-input w-full px-3 py-2 text-sm"
               placeholder="admin@esempio.com"
             />
           </div>
-          
+
           <div>
-            <label className="block text-[#3E2723] font-semibold mb-1">Password</label>
-            <input 
-              type="password" 
+            <label className="block font-pixel text-game-text-dim text-[10px] mb-1 uppercase">Password</label>
+            <input
+              type="password"
               value={password}
               onChange={e => setPassword(e.target.value)}
-              className="input input-bordered w-full bg-[#4E342E] border-[#3E2723] text-[#3E2723]"
+              className="pixel-input w-full px-3 py-2 text-sm"
               placeholder="Password admin"
             />
           </div>
 
           {error && (
-            <div className="alert alert-error text-sm">
-              <span>{error}</span>
+            <div className="bg-game-red/10 border border-game-red p-2 text-game-red text-xs">
+              {error}
             </div>
           )}
 
-          <button type="submit" className="btn btn-gold w-full" disabled={loading}>
-            {loading ? <span className="loading loading-spinner"></span> : 'Accedi'}
+          <button type="submit" className="pixel-btn w-full py-3 text-xs" disabled={loading}>
+            {loading ? 'LOADING...' : 'ACCEDI'}
           </button>
         </form>
 
-        <p className="text-center mt-4 text-[#3E2723]/70 text-sm">
-          <a href="/" className="hover:underline">Torna al negozio</a>
+        <p className="text-center mt-4 text-game-text-dim text-[10px]">
+          <a href="/" className="text-game-gold hover:text-game-gold-light">TORNA AL NEGOZIO</a>
         </p>
       </div>
     </div>
